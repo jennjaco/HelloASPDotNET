@@ -8,41 +8,21 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace HelloASPDotNET.Controllers
 {
-    [Route("/helloworld")]
     public class HelloController : Controller
     {
         // GET: /<controller>/
-
         [HttpGet]
         public IActionResult Index()
         {
-            string html = "<form method='post' action='/helloworld/Welcome'>" +
-      "<input type='text' name='name' />" +
-      "<select name='language'> <option value='1'>English</option><option value='2'>French</option><option value='3'>German</option></select>" +
-      "<input type='submit' value='Greet Me!' />" +
-      "</form>";
-
-            return Content(html, "text/html");
+            return View();
         }
 
-        //GET: /<controller>/welcome
-        [HttpPost("welcome")]
-        [Route("/helloworld/welcome/{name?}/{language?}")]
-        public IActionResult Welcome(string name = "World", string language = "")
+        [HttpPost]
+        [Route("/hello")]
+        public IActionResult Welcome(string name = "World")
         {
-            if (language == "1")
-            {
-                return Content("<h1>Welcome to my app, " + name + "!<h1>", "text/html");
-            }
-            else if (language == "2")
-            {
-                return Content("<h1>Bienvenue, " + name + "!<h1>", "text/html");
-            }
-            else if (language == "3")
-            {
-                return Content("<h1>Wilkommen " + name + "!<h1>", "text/html");
-            }
-            return Content("<h1>It didn't work...<h1>", "text/html");
+            ViewBag.person = name;
+            return View();
         }
     }
 }
